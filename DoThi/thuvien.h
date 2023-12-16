@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <climits>
 
 const int MAX = 30;
 using namespace std;
@@ -24,8 +25,6 @@ struct DsKe {
 };
 
 
-
-
 void nhapCanh(Canh& canh);
 void xuatCanh(Canh canh);
 void nhapDinh(Dinh& dinh);
@@ -34,4 +33,5 @@ void nhapDsKe(DsKe& dsKe);
 void xuatDsKe(DsKe dsKe);
 void themCanh(Dinh& d, char to, int value);
 void themDinh(DsKe& dsDinh, char name);
-void dijkstra(const DsKe& DsKe, char source, int distance[]);
+
+void dijkstra(DsKe graph, char src, char dest);

@@ -60,41 +60,97 @@ void themDinh(DsKe& DsKe, char name) {
 	}
 }
 
-char layDinhUuTien(const DsKe& DsKe, const bool processed[], const int distance[]) {
-	int minDistance = 9999;
-	char u = ' ';
+int findMinDistance(int dist[], bool visited[], int n) {
+    int minDist = INT_MAX;
+    int minIndex = -1;
 
-	for (int i = 0; i < DsKe.n; ++i) {
-		if (!processed[DsKe.dinh[i].name - 'A'] && distance[DsKe.dinh[i].name - 'A'] < minDistance) {
-			minDistance = distance[DsKe.dinh[i].name - 'A'];
-			u = DsKe.dinh[i].name;
-		}
-	}
+    for (int i = 0; i < n; i++) {
+        if (!visited[i] && dist[i] < minDist) {
+            minDist = dist[i];
+            minIndex = i;
+        }
+    }
 
-	return u;
+    return minIndex;
 }
 
+void dijkstra(DsKe graph, char src, char dest) {
+    int n = graph.n;
+    int dist[MAX];
+    bool visited[MAX];
+    int prev[MAX];
 
-void dijkstra(const DsKe& DsKe, char source, int distance[]) {
-	bool processed[MAX] = { false };
 
-	distance[source - 'A'] = 0;
+    for (int i = 0; i < n; i++) {
+        dist[i] = INT_MAX;
+        visited[i] = false;
+        prev[i] = -1;
+    }
 
-	for (int count = 0; count < DsKe.n - 1; ++count) {
-		char u = layDinhUuTien(DsKe, processed, distance);
-		processed[u - 'A'] = true;
+    // Find the index of the source node
+    int srcIndex = -1;
+    for (int i = 0; i < n; i++) {
+        if (graph.dinh[i].name == src) {
+            srcIndex = i;
+            break;
+        }
+    }
 
-		for (int i = 0; i < DsKe.n; ++i) {
-			if (DsKe.dinh[i].name == u) {
-				for (int j = 0; j < DsKe.dinh[i].n; ++j) {
-					char v = DsKe.dinh[i].canh[j].to;
-					int weight = DsKe.dinh[i].canh[j].value;
-					if (!processed[v - 'A'] && distance[u - 'A'] + weight < distance[v - 'A']) {
-						distance[v - 'A'] = distance[u - 'A'] + weight;
-					}
-				}
-				break;
-			}
-		}
-	}
+    // If source node is not found, return
+    if (srcIndex == -1) {
+        cout << "Source node not found!" << endl;
+        return;
+    }
+
+    // Set distance of source node to 0
+    dist[srcIndex] = 0;
+
+    for (int count = 0; count < n - 1; count++) {
+        int u = findMinDistance(dist, visited, n);
+        visited[u] = true;
+
+        for (int v = 0; v < graph.dinh[u].n; v++) {
+            char to = graph.dinh[u].canh[v].to;
+            int value = graph.dinh[u].canh[v].value;
+
+            int toIndex = -1;
+            for (int i = 0; i < n; i++) {
+                if (graph.dinh[i].name == to) {
+                    toIndex = i;
+                    break;
+                }
+            }
+
+            if (toIndex != -1 && !visited[toIndex] && dist[u] != INT_MAX &&
+                dist[u] + value < dist[toIndex]) {
+                dist[toIndex] = dist[u] + value;
+                prev[toIndex] = u;
+            }
+        }
+    }
+
+    // If destination node is not reachable, return
+    int destIndex = -1;
+    for (int i = 0; i < n; i++) {
+        if (graph.dinh[i].name == dest) {
+            destIndex = i;
+            break;
+        }
+    }
+
+    if (dist[destIndex] == INT_MAX) {
+        cout << "Destination node is not reachable from the source node!" << endl;
+        return;
+    }
+
+    // Print the shortest path
+    cout << "Shortest path from node " << src << " to node " << dest << ":" << endl;
+    cout << "Path: ";
+    int current = destIndex;
+    while (current != srcIndex) {
+        cout << graph.dinh[current].name << " <- ";
+        current = prev[current];
+    }
+    cout << graph.dinh[srcIndex].name << endl;
+    cout << "Distance: " << dist[destIndex] << endl;
 }
