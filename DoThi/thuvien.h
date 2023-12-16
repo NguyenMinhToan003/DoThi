@@ -12,22 +12,26 @@ struct Canh {
 	int value;
 };
 
-
 struct Dinh {
-	int n;
+	int n=0;
 	char name;
 	Canh canh[MAX];
 };
  
-struct DSDinh {
-	int n;
+struct DsKe {
+	int n=0;
 	Dinh dinh[MAX];
 };
+
+
 
 
 void nhapCanh(Canh& canh);
 void xuatCanh(Canh canh);
 void nhapDinh(Dinh& dinh);
 void xuatDinh(Dinh dinh);
-void nhapDSDinh(DSDinh& dsDinh);
-void xuatDSDinh(DSDinh dsDinh);
+void nhapDsKe(DsKe& dsKe);
+void xuatDsKe(DsKe dsKe);
+void themCanh(Dinh& d, char to, int value);
+void themDinh(DsKe& dsDinh, char name);
+void dijkstra(const DsKe& DsKe, char source, int distance[]);
