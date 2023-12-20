@@ -60,7 +60,7 @@ void themDinh(DsKe& DsKe, char name) {
 	}
 }
 
-int findMinDistance(int dist[], bool visited[], int n) {
+int timCanhKeCoTrongSoNhoNhat_chiso(int dist[], bool visited[], int n) {
     int minDist = INT_MAX;
     int minIndex = -1;
 
@@ -77,65 +77,51 @@ int findMinDistance(int dist[], bool visited[], int n) {
 void dijkstra(DsKe graph, char src, char dest) {
     int n = graph.n;
     int dist[MAX];
-    bool visited[MAX];
-    int prev[MAX];
-
+    bool visited[MAX + 1]; // Increase the size of visited by 1
+    int prev[MAX]; // Add the prev array
 
     for (int i = 0; i < n; i++) {
         dist[i] = INT_MAX;
         visited[i] = false;
-        prev[i] = -1;
+        prev[i] = -1; // Initialize prev array with -1
     }
 
     // Find the index of the source node
-    int srcIndex = -1;
-    for (int i = 0; i < n; i++) {
-        if (graph.dinh[i].name == src) {
-            srcIndex = i;
-            break;
-        }
-    }
+    int srcIndex = timDinh_chiSo(graph, src);
 
-    // If source node is not found, return
+    // If the source node is not found, return
     if (srcIndex == -1) {
         cout << "Diem dau khong tim thay !" << endl;
         return;
     }
 
-    // Set distance of source node to 0
+    // Set the distance of the source node to 0
     dist[srcIndex] = 0;
 
-    for (int count = 0; count < n - 1; count++) {
-        int u = findMinDistance(dist, visited, n);
+    for (int i = 0; i < n - 1; i++) {
+        int u = timCanhKeCoTrongSoNhoNhat_chiso(dist, visited, n);
         visited[u] = true;
 
         for (int v = 0; v < graph.dinh[u].n; v++) {
             char to = graph.dinh[u].canh[v].to;
             int value = graph.dinh[u].canh[v].value;
 
-            int toIndex = -1;
-            for (int i = 0; i < n; i++) {
-                if (graph.dinh[i].name == to) {
-                    toIndex = i;
-                    break;
-                }
-            }
+            int toIndex = timDinh_chiSo(graph, to);
 
             if (toIndex != -1 && !visited[toIndex] && dist[u] != INT_MAX &&
                 dist[u] + value < dist[toIndex]) {
                 dist[toIndex] = dist[u] + value;
-                prev[toIndex] = u;
+                prev[toIndex] = u; // Update the previous vertex
             }
         }
     }
 
-    // If destination node is not reachable, return
-    int destIndex = -1;
-    for (int i = 0; i < n; i++) {
-        if (graph.dinh[i].name == dest) {
-            destIndex = i;
-            break;
-        }
+    // If the destination node is not reachable, return
+    int destIndex = timDinh_chiSo(graph, dest);
+
+    if (destIndex == -1) {
+        cout << "Diem cuoi khong tim thay !" << endl;
+        return;
     }
 
     if (dist[destIndex] == INT_MAX) {
@@ -144,7 +130,7 @@ void dijkstra(DsKe graph, char src, char dest) {
     }
 
     // Print the shortest path
-    cout << "Duong di ngan nhat tu  " << src << " toi dinh " << dest << ":" << endl;
+    cout << "Duong di ngan nhat tu " << src << " toi dinh " << dest << ":" << endl;
     cout << "Path: ";
     int current = destIndex;
     while (current != srcIndex) {
@@ -152,14 +138,15 @@ void dijkstra(DsKe graph, char src, char dest) {
         current = prev[current];
     }
     cout << graph.dinh[srcIndex].name << endl;
-    cout << "Trong so : " << dist[destIndex] << endl;
+    cout << "Trong so: " << dist[destIndex] << endl;
 }
+
 int timDinh_chiSo(DsKe dsk, char name) {
     int chso = -1;
     for (int i = 0; i < dsk.n; i++) {
-        if (name == dsk.dinh[i].name)
-        {
-            chso = i; break;
+        if (name == dsk.dinh[i].name) {
+            chso = i;
+            break;
         }
     }
     return chso;

@@ -5,6 +5,13 @@
 int main() {
     DsKe dsk;
     int option=0;
+    themDinh(dsk, 'A');
+   themDinh(dsk, 'B');
+   themDinh(dsk, 'D');
+   themDinh(dsk, 'C');
+   themCanh(dsk.dinh[0], 'B', 1);
+   themCanh(dsk.dinh[1], 'C', 2);
+   themCanh(dsk.dinh[0], 'C', 2);
     do {
         dongGachNgang();
         cout << "\n1.Nhap Danh Sach Ke.";
@@ -79,19 +86,19 @@ int main() {
         }
         
     } while (option!=0);
-   /* themDinh(graph, 'A');
-    themDinh(graph, 'B');
-    themDinh(graph, 'C');
-    themCanh(graph.dinh[0], 'B', 1);
-    themCanh(graph.dinh[1], 'C', 2);
-    themCanh(graph.dinh[0], 'C', 2);
+   /* themDinh(dsk, 'A');
+    themDinh(dsk, 'B');
+    themDinh(dsk, 'C');
+    themCanh(dsk.dinh[0], 'B', 1);
+    themCanh(dsk.dinh[1], 'C', 2);
+    themCanh(dsk.dinh[0], 'C', 2);
     char source, destination;
     cout << "Nhap dinh bat dau (A, B, C, ...): ";
     cin >> source;
     cout << "Nhap dinh ket thuc (A, B, C, ...): ";
     cin >> destination;
     int distance[MAX];
-    dijkstra(graph, source,destination);*/
+    dijkstra(dsk, source,destination);*/
 
     return 0;
 }
