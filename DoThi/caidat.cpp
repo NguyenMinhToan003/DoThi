@@ -98,7 +98,7 @@ void dijkstra(DsKe graph, char src, char dest) {
 
     // If source node is not found, return
     if (srcIndex == -1) {
-        cout << "Source node not found!" << endl;
+        cout << "Diem dau khong tim thay !" << endl;
         return;
     }
 
@@ -139,12 +139,12 @@ void dijkstra(DsKe graph, char src, char dest) {
     }
 
     if (dist[destIndex] == INT_MAX) {
-        cout << "Destination node is not reachable from the source node!" << endl;
+        cout << "Khong tim thay duong di!" << endl;
         return;
     }
 
     // Print the shortest path
-    cout << "Shortest path from node " << src << " to node " << dest << ":" << endl;
+    cout << "Duong di ngan nhat tu  " << src << " toi dinh " << dest << ":" << endl;
     cout << "Path: ";
     int current = destIndex;
     while (current != srcIndex) {
@@ -152,5 +152,21 @@ void dijkstra(DsKe graph, char src, char dest) {
         current = prev[current];
     }
     cout << graph.dinh[srcIndex].name << endl;
-    cout << "Distance: " << dist[destIndex] << endl;
+    cout << "Trong so : " << dist[destIndex] << endl;
+}
+int timDinh_chiSo(DsKe dsk, char name) {
+    int chso = -1;
+    for (int i = 0; i < dsk.n; i++) {
+        if (name == dsk.dinh[i].name)
+        {
+            chso = i; break;
+        }
+    }
+    return chso;
+}
+void dongGachNgang() {
+    for (int i = 0; i < 133; i++) {
+        cout << "-";
+    }
+    cout << endl;
 }

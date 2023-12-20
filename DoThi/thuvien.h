@@ -35,3 +35,7 @@ void themCanh(Dinh& d, char to, int value);
 void themDinh(DsKe& dsDinh, char name);
 
 void dijkstra(DsKe graph, char src, char dest);
+int timDinh_chiSo(DsKe dsk, char name);
+
+
+void dongGachNgang();
