@@ -77,9 +77,12 @@ int timCanhKeCoTrongSoNhoNhat_chiso(int dist[], bool visited[], int n) {
 void dijkstra(DsKe graph, char src, char dest) {
     int n = graph.n;
     int dist[MAX];
-    bool visited[MAX + 1]; // Increase the size of visited by 1
+    bool visited[MAX]; // Increase the size of visited by 1
     int prev[MAX]; // Add the prev array
-
+    if (n > MAX) {
+        cout << "Do thi qua lon, tang gia tri cua MAX!" << std::endl;
+        return;
+    }
     for (int i = 0; i < n; i++) {
         dist[i] = INT_MAX;
         visited[i] = false;
@@ -100,6 +103,10 @@ void dijkstra(DsKe graph, char src, char dest) {
 
     for (int i = 0; i < n - 1; i++) {
         int u = timCanhKeCoTrongSoNhoNhat_chiso(dist, visited, n);
+        if (u == -1) {
+            cout << "Khong tim thay duong di!" << endl;
+            return;
+        }
         visited[u] = true;
 
         for (int v = 0; v < graph.dinh[u].n; v++) {

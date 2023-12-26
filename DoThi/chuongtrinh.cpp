@@ -6,12 +6,14 @@ int main() {
     DsKe dsk;
     int option=0;
     themDinh(dsk, 'A');
-   themDinh(dsk, 'B');
-   themDinh(dsk, 'D');
-   themDinh(dsk, 'C');
-   themCanh(dsk.dinh[0], 'B', 1);
-   themCanh(dsk.dinh[1], 'C', 2);
-   themCanh(dsk.dinh[0], 'C', 2);
+    themDinh(dsk, 'B');
+    themDinh(dsk, 'D');
+    themDinh(dsk, 'C');
+    themCanh(dsk.dinh[0], 'B', 1);
+    themCanh(dsk.dinh[1], 'C', 2);
+    themCanh(dsk.dinh[0], 'C',4);
+    themCanh(dsk.dinh[2], 'C', 3);
+    themCanh(dsk.dinh[2], 'A', 3);
     do {
         dongGachNgang();
         cout << "\n1.Nhap Danh Sach Ke.";

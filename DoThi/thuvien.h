@@ -5,7 +5,7 @@
 #include <string>
 #include <climits>
 
-const int MAX = 30;
+const int MAX = 10;
 using namespace std;
 
 struct Canh {
